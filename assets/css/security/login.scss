@@ -1,0 +1,73 @@
+/**
+ * https://fontawesome.com/how-to-use/on-the-web/setup/using-package-managers
+ * yarn add --dev @fortawesome/fontawesome-free
+ */
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
+
+.main-section {
+  margin: 130px auto;
+  padding: 0;
+}
+
+.modal-content {
+  background-color: #3b4652;
+  opacity: .95;
+  padding: 0 18px;
+  box-shadow: 0 0 3px #848484;
+}
+
+.user-img {
+  margin-top: -50px;
+  margin-bottom: 35px;
+}
+
+.user-img img {
+  height: 100px;
+  width: 100px;
+  border-radius: 5px;
+  box-shadow: 0 0 2px #848484;
+}
+
+.input-group {
+  margin-bottom: 25px;
+}
+
+.input-group input {
+  height: 42px;
+  border-radius: 5px;
+  border: 0;
+  font-size: 18px;
+}
+
+button {
+  width: 40%;
+  margin: 5px 0 25px;
+}
+
+.btn {
+  background-color: #27c2a5;
+  color: #fff;
+  font-size: 19px;
+  padding: 7px 14px;
+  border-radius: 5px;
+  border-bottom: 4px solid #219882;
+}
+
+.btn:hover, .btn:focus {
+  background-color: #25a890;
+  border-bottom: 4px solid #25a890 !important;
+}
+
+.forgot {
+  padding: 5px 0 3px;
+}
+
+.not-registered {
+  color: #fff;
+  padding: 3px 0 25px;
+}
+
+.forgot a, .not-registered a {
+  color: #c2fbfe
+}
+

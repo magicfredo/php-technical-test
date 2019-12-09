@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('login') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('login') }}
+{% endblock %}
+
+{% block body %}
+
+    <div class="modal-dialog text-center">
+        <div class="col-sm-8 main-section">
+            <div class="modal-content">
+
+                <div class="col-12 user-img">
+                    <img src="{{ asset('build/images/hand-screaming.png') }}" />
+                </div>
+
+                <form method="post" class="col-12">
+
+                    {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputEmail"><i class="fas fa-at"></i></label>
+                        </div>
+                        <input type="text" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus />
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputPassword"><i class="fas fa-key"></i></label>
+                        </div>
+                        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required />
+                    </div>
+
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+
+                    <button type="submit" class="btn">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+
+                </form>
+
+                <div class="col-12 forgot">
+                    <a href="#">Forgot Password?</a>
+                </div>
+                <div class="col-12 not-registered">
+                    Not registered ? <a href="{{ path('security_register') }}">Create an account</a>
+                </div>
+
+            </div> <!--- End of Modal Content -->
+        </div>
+    </div>
+
+{% endblock %}

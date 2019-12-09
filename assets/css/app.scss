@@ -1,0 +1,17 @@
+// customize some Bootstrap variables
+$primary: darken(#428bca, 20%);
+
+// the ~ allows you to reference things in node_modules
+@import "~bootstrap/scss/bootstrap";
+
+// Google fonts
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+// Do not display errors on label !!!
+label > span.invalid-feedback {
+  display: none !important;
+}
