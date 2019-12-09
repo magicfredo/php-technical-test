@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -64,6 +65,13 @@ class User implements UserInterface
      * @var array
      */
     private $roles;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Run", mappedBy="user")
+     *
+     * @var PersistentCollection
+     */
+    private $runsList;
 
     public function __construct()
     {

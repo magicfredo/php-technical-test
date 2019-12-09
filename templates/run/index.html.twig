@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1 class="alert-success">Runs</h1>
+
+    <a href="{{ path('default_index') }}"><< Home</a> |
+    <a href="{{ path('run_form') }}">Add run</a>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>type</th>
+            <th>started at</th>
+            <th>duration</th>
+            <th>distance</th>
+            <th>comment</th>
+            <th>average speed</th>
+            <th>average pace</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if runs %}
+            {% for run in runs %}
+                <tr>
+                    <td>{{ run.id }}</td>
+                    <td>{{ run.type }}</td>
+                    <td>{{ run.startedAt|date('Y-m-d H:i:s') }}</td>
+                    <td>{{ run.duration }} s</td>
+                    <td>{{ run.distance }} m</td>
+                    <td>{{ run.comment }}</td>
+                    <td>{{ run.averageSpeed }} km/h</td>
+                    <td>{{ '%.2f'|format(run.averagePace)|replace({'.': '\''}) }}" /km</td>
+                    <td><a href="{{ path('run_form', {'id': run.id}) }}">Update</a></td>
+                    <td><a href="{{ path('run_delete', {'id': run.id}) }}">Remove</a></td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+
+{% endblock %}

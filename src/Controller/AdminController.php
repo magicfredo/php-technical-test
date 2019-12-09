@@ -33,6 +33,7 @@ class AdminController extends AbstractController
     ): Response
     {
         $users = $userService->findAll($request);
+
         return $this->render('admin/user.html.twig', [
             'users' => $users
         ]);
