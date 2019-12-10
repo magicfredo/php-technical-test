@@ -28,7 +28,7 @@
                     <td>{{ run.id }}</td>
                     <td>{{ run.type }}</td>
                     <td>{{ run.startedAt|date('Y-m-d H:i:s') }}</td>
-                    <td>{{ run.duration }} s</td>
+                    <td>{{ run.duration|date('H:i:s') }} s</td>
                     <td>{{ run.distance }} m</td>
                     <td>{{ run.comment }}</td>
                     <td>{{ run.averageSpeed }} km/h</td>

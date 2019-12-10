@@ -69,7 +69,14 @@ class RunController extends AbstractController
         $run = $run ?? new Run();
 
         if (null !== $run->getId()) {
-            $run->setDuration(6);
+//            $hms = sprintf('%02d:%02d:%02d',
+//                $run->getDuration() / 3600,
+//                $run->getDuration() / 60 % 60,
+//                $run->getDuration() % 60
+//            );
+//            $date = \DateTime::createFromFormat('H:i:s', $hms);
+//            $run->setDuration($date->getTimestamp());
+
             $run->setDistance(round($run->getDistance() / 1000, 2));
         }
 
@@ -81,18 +88,19 @@ class RunController extends AbstractController
 
             $run->setUser($user);
 
-            $durationHour = $params['duration']['hour'] ? (int)$params['duration']['hour'] : 0;
-            $durationMinute = $params['duration']['minute'] ? (int)$params['duration']['minute'] : 0;
-            $durationSecond = $params['duration']['second'] ? (int)$params['duration']['second'] : 0;
+            $durationHour = $params['duration']['hour'] ? sprintf('%02d', $params['duration']['hour']) : '00';
+            $durationMinute = $params['duration']['minute'] ? sprintf('%02d', $params['duration']['minute']) : '00';
+            $durationSecond = $params['duration']['second'] ? sprintf('%02d', $params['duration']['second']) : '00';
             $duration = $durationHour * 3600 + $durationMinute * 60 + $durationSecond;
-            $run->setDuration($duration);
+            $date = \DateTime::createFromFormat('Y-m-d H:i:s', "1970-01-01 {$durationHour}:{$durationMinute}:{$durationSecond}");
+            $run->setDuration($date->getTimestamp());
 
-            $distance = (int)$params['distance'] * 1000;
+            $distance = round((float)$params['distance'] * 1000, 2);
             $run->setDistance($distance);
 
-            $run->setAverageSpeed($runService->getAverageSpeed($distance, $duration));
-
-            $run->setAveragePace($runService->getAveragePace($distance, $duration));
+            [$averageSpeed, $averagePace] = $runService->calculatedAverages($distance, $duration);
+            $run->setAverageSpeed($averageSpeed);
+            $run->setAveragePace($averagePace);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($run);

@@ -24,28 +24,20 @@ class RunService
     /**
      * @param int $distance (meter)
      * @param int $duration (seconds)
-     * @return float
+     * @return array
      */
-    public function getAverageSpeed(
+    public function calculatedAverages(
         int $distance,
         int $duration
-    ): float {
+    ): array {
         $averageSpeed = ($distance / $duration) * 3.6;
+        $averageSpeed = round($averageSpeed, 2);
 
-        return round($averageSpeed, 2);
-    }
+        $tmp = 60 / $averageSpeed;
+        $averagePaceMinute = floor($tmp);
+        $averagePaceSecond = ($tmp - $averagePaceMinute) * 60;
+        $averagePace = round($averagePaceMinute . '.' . $averagePaceSecond , 2);
 
-    /**
-     * @param int $distance (meter)
-     * @param int $duration (seconds)
-     * @return float
-     */
-    public function getAveragePace(
-        int $distance,
-        int $duration
-    ): float {
-        $averagePace = ($duration / 60) / ($distance / 1000);
-
-        return round($averagePace, 2);
+        return [$averageSpeed, $averagePace];
     }
 }
