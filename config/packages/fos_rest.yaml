@@ -11,7 +11,7 @@ fos_rest:
   format_listener:
     rules:
       - { path: '^/api/', fallback_format: 'json', priorities: ['json'] }
-      - { path: '^/', fallback_format: 'html', priorities: ['html'] }
+      - { path: '^/*', fallback_format: 'html', priorities: ['html'] }
   body_listener:
     enabled: true
   serializer:
