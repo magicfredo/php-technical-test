@@ -6,12 +6,11 @@ namespace App\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
+use Symfony\Component\Serializer\Annotation\Groups as SerializerGroups;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\RunRepository")
  */
 class Run
 {
@@ -29,6 +28,8 @@ class Run
      * @ORM\Id()
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @SerializerGroups({"run"})
      *
      * @var int
      */
@@ -53,12 +54,16 @@ class Run
      * @Assert\NotBlank(message="error.type.not_blank")
      * @Assert\Choice(choices={"TRAINING", "RUNNING", "LEISURE"}, message="error.type.choice")
      *
+     * @SerializerGroups({"run"})
+     *
      * @var string
      */
     private $type;
 
     /**
      * @ORM\Column(type="datetime", name="started_at")
+     *
+     * @SerializerGroups({"run"})
      *
      * @var DateTime
      */
@@ -67,12 +72,16 @@ class Run
     /**
      * @ORM\Column(type="integer")
      *
+     * @SerializerGroups({"run"})
+     *
      * @var int
      */
     private $duration;
 
     /**
      * @ORM\Column(type="integer")
+     *
+     * @SerializerGroups({"run"})
      *
      * @var int
      */
@@ -81,12 +90,16 @@ class Run
     /**
      * @ORM\Column(type="text")
      *
+     * @SerializerGroups({"run"})
+     *
      * @var string
      */
     private $comment;
 
     /**
      * @ORM\Column(type="float", name="average_speed")
+     *
+     * @SerializerGroups({"run"})
      *
      * @var string
      */
@@ -95,6 +108,8 @@ class Run
     /**
      * @ORM\Column(type="float", name="average_pace")
      *
+     * @SerializerGroups({"run"})
+     *
      * @var string
      */
     private $averagePace;
@@ -102,6 +117,8 @@ class Run
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="runsList")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     *
+     * @SerializerGroups({"user"})
      *
      * @var User
      */

@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Run;
 use App\Repository\RunRepository;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,6 +20,33 @@ class RunService
         RunRepository $runRepository
     ) {
         $this->runRepository = $runRepository;
+    }
+
+    /**
+     * @todo order, limit, offset
+     *
+     * @param Request $request
+     * @return array|Run[]|null
+     */
+    public function findRunsList(?Request $request = null): ?array
+    {
+        $userId = null !== $request ? $request->get('user_id') : null;
+        $runsList = null;
+
+        if (null !== $userId) {
+            $runsList = $this->runRepository->findBy([
+                'userId' => $userId
+            ]);
+        }
+        else {
+            $runsList = $this->runRepository->findAll();
+        }
+
+        foreach ($runsList as $run) {
+            dump($run);
+        }
+
+        return $runsList;
     }
 
     /**

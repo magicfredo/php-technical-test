@@ -69,14 +69,6 @@ class RunController extends AbstractController
         $run = $run ?? new Run();
 
         if (null !== $run->getId()) {
-//            $hms = sprintf('%02d:%02d:%02d',
-//                $run->getDuration() / 3600,
-//                $run->getDuration() / 60 % 60,
-//                $run->getDuration() % 60
-//            );
-//            $date = \DateTime::createFromFormat('H:i:s', $hms);
-//            $run->setDuration($date->getTimestamp());
-
             $run->setDistance(round($run->getDistance() / 1000, 2));
         }
 

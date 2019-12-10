@@ -3,10 +3,11 @@
 {% block body %}
     <h1 class="alert-success">Welcome</h1>
 
-    <a href="{{ path('run_index') }}">Run</a><br />
-
     {% if app.user %}
-        Welcome {{ app.user.username }} !
+        Welcome {{ app.user.username }} !<br />
+        <hr />
+        <a href="{{ path('run_index') }}">Run</a><br />
+        <hr />
         <a href="{{ path('security_logout') }}">Logout</a>
     {% else %}
         <a href="{{ path('security_login') }}">Login</a>
@@ -14,7 +15,7 @@
 
     <br />
     {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('admin_index') }}">Admin 2</a>
+        <a href="{{ path('admin_index') }}">Admin</a>
     {% endif %}
     <br />
 
