@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Run;
 use App\Repository\RunRepository;
+use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 
 class RunService
@@ -23,14 +24,20 @@ class RunService
     }
 
     /**
+     * @param Request|null $request
+     * @param int|null $userId
+     * @return array|Run[]|null
      * @todo order, limit, offset
      *
-     * @param Request $request
-     * @return array|Run[]|null
      */
-    public function findRunsList(?Request $request = null): ?array
+    public function findRunsList(
+        ?Request $request = null,
+        ?int $userId = null
+    ): ?array
     {
-        $userId = null !== $request ? $request->get('user_id') : null;
+        if (null === $userId) {
+            $userId = null !== $request ? $request->get('user_id') : null;
+        }
         $runsList = null;
 
         if (null !== $userId) {
@@ -43,7 +50,9 @@ class RunService
         }
 
         foreach ($runsList as $run) {
-            dump($run);
+            $run->setDurationFormatted(
+                $this->durationFormatted($run->getDuration())
+            );
         }
 
         return $runsList;
@@ -67,5 +76,34 @@ class RunService
         $averagePace = round($averagePaceMinute . '.' . $averagePaceSecond , 2);
 
         return [$averageSpeed, $averagePace];
+    }
+
+    /**
+     * @param int $duration
+     * @return string
+     */
+    public function durationFormatted(
+        int $duration
+    ): string {
+        $hours = floor($duration / 3600);
+        $minutes = floor(($duration - ($hours * 3600)) / 60);
+        $seconds = floor($duration % 60);
+
+        return sprintf('%02d', $hours) . ':'
+            . sprintf('%02d', $minutes) . ':'
+            . sprintf('%02d', $seconds);
+    }
+
+    /**
+     * @param int $duration
+     * @return int
+     */
+    public function durationTimestamp(
+        int $duration
+    ): int {
+        $durationFormatted = $this->durationFormatted($duration);
+        $date = DateTime::createFromFormat('Y-m-d H:i:s', "1970-01-01 {$durationFormatted}");
+
+        return $date->getTimestamp();
     }
 }

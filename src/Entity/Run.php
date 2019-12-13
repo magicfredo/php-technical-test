@@ -79,6 +79,13 @@ class Run
     private $duration;
 
     /**
+     * @SerializerGroups({"run"})
+     * 
+     * @var string
+     */
+    private $durationFormatted;
+
+    /**
      * @ORM\Column(type="integer")
      *
      * @SerializerGroups({"run"})
@@ -217,6 +224,24 @@ class Run
     public function setDuration(int $duration): Run
     {
         $this->duration = $duration;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDurationFormatted(): ?string
+    {
+        return $this->durationFormatted;
+    }
+
+    /**
+     * @param string $durationFormatted
+     * @return Run
+     */
+    public function setDurationFormatted(string $durationFormatted): Run
+    {
+        $this->durationFormatted = $durationFormatted;
         return $this;
     }
 
